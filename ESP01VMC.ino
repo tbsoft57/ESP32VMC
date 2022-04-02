@@ -13,7 +13,7 @@
 #define tx   1
 #define rx   3
 #define R1   io0
-#define R2   io2
+#define R2   io2test
 
 ESP8266WebServer server(80);
 
@@ -21,21 +21,21 @@ String SR1, SR2;
 
 void setup() {
   // pinMode(tx, FUNCTION_3); pinMode(rx, FUNCTION_3); // -> transforme tx et rx en GPIO
-  pinMode(R1,  OUTPUT); 
-  pinMode(R2,  OUTPUT); 
+  pinMode(R1,  OUTPUT);
+  pinMode(R2,  OUTPUT);
   WiFi.config(IPAddress(192, 168, 0, IP), IPAddress(192, 168, 0, 1), IPAddress(255, 255, 255, 0));
   WiFi.hostname(OTAName); WiFi.mode(WIFI_STA); WiFi.begin(WifiSSID, WifiPass);
   while (WiFi.status() != WL_CONNECTED) { delay(250); }
-  ArduinoOTA.setHostname(OTAName); ArduinoOTA.begin();  
+  ArduinoOTA.setHostname(OTAName); ArduinoOTA.begin();
   server.on("/", HTTP_GET, root);
-  server.begin(); 
+  server.begin();
 }
 
 void loop() { server.handleClient(); ArduinoOTA.handle(); }
 
-void root() { 
-  SR1 = server.arg("R1"); 
-  SR2 = server.arg("R2"); 
+void root() {
+  SR1 = server.arg("R1");
+  SR2 = server.arg("R2");
   digitalWrite(R1, (SR1=="ON")?HIGH:LOW);
   digitalWrite(R2, (SR2=="ON")?HIGH:LOW);
   server.send(200, "text/plain", "Ok" );
