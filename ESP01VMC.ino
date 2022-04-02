@@ -13,7 +13,7 @@
 #define tx   1
 #define rx   3
 #define R1   io0
-#define R2   io2test
+#define R2   io2
 
 ESP8266WebServer server(80);
 
